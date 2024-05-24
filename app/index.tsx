@@ -3,7 +3,7 @@ import React from "react";
 import { images } from "@/constants";
 import CustomButton from "@/components/CustomButton";
 import { StatusBar } from "expo-status-bar";
-import { Link, Redirect, router } from "expo-router";
+import { Redirect, router } from "expo-router";
 
 const Home = () => {
   return (
