@@ -1,66 +1,57 @@
 import { icons } from "@/constants";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, Image, KeyboardTypeOptions } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  KeyboardTypeOptions,
+} from "react-native";
 import {
   GestureHandlerRootView,
   TextInput,
 } from "react-native-gesture-handler";
 
-type FormFieldProps = {
-  title: string;
-  value: string;
+type SearchInputProps = {
+  value?: string;
   otherStyles?: string;
   keyboardType?: KeyboardTypeOptions | undefined;
   placeholder?: string;
-  handleChangeText: (text: string) => void;
+  handleChangeText?: (text: string) => void;
 };
 
-const FormField = ({
-  title,
+const SearchInput = ({
   value,
   otherStyles,
   keyboardType,
   handleChangeText,
   ...props
-}: FormFieldProps) => {
+}: SearchInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View className={`space-y-2 ${otherStyles}`}>
-      <Text
-        className="text-base text-gray-100
-      font-pmedium"
-      >
-        {title}
-      </Text>
-
-      <GestureHandlerRootView
-        className="border-2 border-black-200 w-full h-16
+    <GestureHandlerRootView
+      className="border-2 border-black-200 w-full h-16
        px-4 bg-black-100 rounded-2xl focus:border-secondary
-        items-center flex-row"
-      >
-        <TextInput
-          className="flex-1 text-white font-psemibold text-base"
-          value={value}
-          placeholder={props.placeholder}
-          placeholderTextColor="#7b7b8b"
-          onChangeText={handleChangeText}
-          keyboardType={keyboardType}
-          secureTextEntry={title === "Password" && !showPassword}
-        />
+        items-center flex-row space-x-4"
+    >
+      <TextInput
+        className="text-base mt-0.5 text-white flex-1
+          font-pregular"
+        value={value}
+        placeholder="Search for a video topic"
+        placeholderTextColor="#7b7b8b"
+        onChangeText={handleChangeText}
+        keyboardType={keyboardType}
+      />
 
-        {title === "Password" && (
-          <TouchableOpacity onPress={() => setShowPassword((prev) => !prev)}>
-            <Image
-             source={!showPassword ? icons.eye : icons.eyeHide}
-             className="w-6 h-6"
-             resizeMode="contain"
-              />
-          </TouchableOpacity>
-        )}
-      </GestureHandlerRootView>
-    </View>
+      <TouchableOpacity>
+        <Image source={icons.search}
+         className="w-5 h-5"
+         resizeMode="contain" />
+      </TouchableOpacity>
+    </GestureHandlerRootView>
   );
 };
 
-export default FormField;
+export default SearchInput;

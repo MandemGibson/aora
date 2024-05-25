@@ -17,6 +17,16 @@ export const config = {
   storageId: "6650e80100141476e841",
 };
 
+const {
+  endpoint,
+  platform,
+  projectId,
+  databaseId,
+  userCollectionId,
+  videoCollectionId,
+  storageId,
+} = config;
+
 const client = new Client();
 client
   .setEndpoint(config.endpoint)
@@ -99,5 +109,28 @@ export const getCurrentUser = async () => {
     return currentUser;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getAllPosts = async () => {
+  try {
+    const posts = await databases.listDocuments(databaseId, videoCollectionId);
+
+    return posts.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const getLatestPosts = async () => {
+  try {
+    const posts = await databases.listDocuments(databaseId, videoCollectionId, [
+      Query.orderDesc("$createdAt"),
+      Query.limit(7),
+    ]);
+
+    return posts.documents;
+  } catch (error: any) {
+    throw new Error(error);
   }
 };
