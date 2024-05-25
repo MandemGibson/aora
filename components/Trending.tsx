@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 import { icons } from "@/constants";
 import { useState } from "react";
 import {
@@ -42,7 +41,7 @@ const zoomOut = {
 
 const TrendingItem = ({ activeItem, item }: TrendingItemProps) => {
   const [play, setPlay] = useState<boolean>(false);
-  
+
   return (
     <Animatable.View
       className="mr-5"
@@ -51,17 +50,22 @@ const TrendingItem = ({ activeItem, item }: TrendingItemProps) => {
     >
       {play ? (
         <Video
-          source={{ uri: item.video}}
+          source={{ uri: item.video }}
           className="w-52 h-72 rounded-[35px] mt-3 bg-white/10"
           resizeMode={ResizeMode.CONTAIN}
           useNativeControls
           shouldPlay
+          onPlaybackStatusUpdate={(status)=>{
+            if(status.didJustFinish){
+              setPlay(false)
+              }
+          }}
         />
       ) : (
         <TouchableOpacity
           className="relative justify-center items-center"
           activeOpacity={0.7}
-          onPress={()=>setPlay(true)}
+          onPress={() => setPlay(true)}
         >
           <ImageBackground
             source={{
